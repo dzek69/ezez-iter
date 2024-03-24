@@ -1,5 +1,6 @@
 const generateOptions = (raw: string, from: string | undefined, to: string | undefined) => {
     if (from === undefined || to === undefined) {
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         return raw.slice(1, -1).split("|");
     }
     const fromNumber = parseInt(from, 10);

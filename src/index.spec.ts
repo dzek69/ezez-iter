@@ -1,0 +1,156 @@
+import { iter } from "./index";
+
+describe("iter", () => {
+    it("should generate urls from non-padded numbers", () => {
+        iter("https://example.com/[1-2]/file.txt").must.eql([
+            "https://example.com/1/file.txt",
+            "https://example.com/2/file.txt",
+        ]);
+    });
+
+    it("should go beyond initial character count", () => {
+        iter("https://example.com/[6-13]/file.txt").must.eql([
+            "https://example.com/6/file.txt",
+            "https://example.com/7/file.txt",
+            "https://example.com/8/file.txt",
+            "https://example.com/9/file.txt",
+            "https://example.com/10/file.txt",
+            "https://example.com/11/file.txt",
+            "https://example.com/12/file.txt",
+            "https://example.com/13/file.txt",
+        ]);
+    });
+
+    it("should support padded numbers", () => {
+        iter("https://example.com/[001-003]/file.txt").must.eql([
+            "https://example.com/001/file.txt",
+            "https://example.com/002/file.txt",
+            "https://example.com/003/file.txt",
+        ]);
+    });
+
+    it("should support padded numbers where end number has more chars", () => {
+        iter("https://example.com/[09-100]/file.txt").must.eql([
+            "https://example.com/09/file.txt",
+            "https://example.com/10/file.txt",
+            "https://example.com/11/file.txt",
+            "https://example.com/12/file.txt",
+            "https://example.com/13/file.txt",
+            "https://example.com/14/file.txt",
+            "https://example.com/15/file.txt",
+            "https://example.com/16/file.txt",
+            "https://example.com/17/file.txt",
+            "https://example.com/18/file.txt",
+            "https://example.com/19/file.txt",
+            "https://example.com/20/file.txt",
+            "https://example.com/21/file.txt",
+            "https://example.com/22/file.txt",
+            "https://example.com/23/file.txt",
+            "https://example.com/24/file.txt",
+            "https://example.com/25/file.txt",
+            "https://example.com/26/file.txt",
+            "https://example.com/27/file.txt",
+            "https://example.com/28/file.txt",
+            "https://example.com/29/file.txt",
+            "https://example.com/30/file.txt",
+            "https://example.com/31/file.txt",
+            "https://example.com/32/file.txt",
+            "https://example.com/33/file.txt",
+            "https://example.com/34/file.txt",
+            "https://example.com/35/file.txt",
+            "https://example.com/36/file.txt",
+            "https://example.com/37/file.txt",
+            "https://example.com/38/file.txt",
+            "https://example.com/39/file.txt",
+            "https://example.com/40/file.txt",
+            "https://example.com/41/file.txt",
+            "https://example.com/42/file.txt",
+            "https://example.com/43/file.txt",
+            "https://example.com/44/file.txt",
+            "https://example.com/45/file.txt",
+            "https://example.com/46/file.txt",
+            "https://example.com/47/file.txt",
+            "https://example.com/48/file.txt",
+            "https://example.com/49/file.txt",
+            "https://example.com/50/file.txt",
+            "https://example.com/51/file.txt",
+            "https://example.com/52/file.txt",
+            "https://example.com/53/file.txt",
+            "https://example.com/54/file.txt",
+            "https://example.com/55/file.txt",
+            "https://example.com/56/file.txt",
+            "https://example.com/57/file.txt",
+            "https://example.com/58/file.txt",
+            "https://example.com/59/file.txt",
+            "https://example.com/60/file.txt",
+            "https://example.com/61/file.txt",
+            "https://example.com/62/file.txt",
+            "https://example.com/63/file.txt",
+            "https://example.com/64/file.txt",
+            "https://example.com/65/file.txt",
+            "https://example.com/66/file.txt",
+            "https://example.com/67/file.txt",
+            "https://example.com/68/file.txt",
+            "https://example.com/69/file.txt",
+            "https://example.com/70/file.txt",
+            "https://example.com/71/file.txt",
+            "https://example.com/72/file.txt",
+            "https://example.com/73/file.txt",
+            "https://example.com/74/file.txt",
+            "https://example.com/75/file.txt",
+            "https://example.com/76/file.txt",
+            "https://example.com/77/file.txt",
+            "https://example.com/78/file.txt",
+            "https://example.com/79/file.txt",
+            "https://example.com/80/file.txt",
+            "https://example.com/81/file.txt",
+            "https://example.com/82/file.txt",
+            "https://example.com/83/file.txt",
+            "https://example.com/84/file.txt",
+            "https://example.com/85/file.txt",
+            "https://example.com/86/file.txt",
+            "https://example.com/87/file.txt",
+            "https://example.com/88/file.txt",
+            "https://example.com/89/file.txt",
+            "https://example.com/90/file.txt",
+            "https://example.com/91/file.txt",
+            "https://example.com/92/file.txt",
+            "https://example.com/93/file.txt",
+            "https://example.com/94/file.txt",
+            "https://example.com/95/file.txt",
+            "https://example.com/96/file.txt",
+            "https://example.com/97/file.txt",
+            "https://example.com/98/file.txt",
+            "https://example.com/99/file.txt",
+            "https://example.com/100/file.txt",
+        ]);
+    });
+
+    it("should support string options", () => {
+        iter("https://example.com/file{.txt|.json}").must.eql([
+            "https://example.com/file.txt",
+            "https://example.com/file.json",
+        ]);
+    });
+
+    it("should support everything mixed", () => {
+        iter("https://example.com/[1-2]/file[09-12]{.txt|.json}").must.eql([
+            "https://example.com/1/file09.txt",
+            "https://example.com/2/file09.txt",
+            "https://example.com/1/file10.txt",
+            "https://example.com/2/file10.txt",
+            "https://example.com/1/file11.txt",
+            "https://example.com/2/file11.txt",
+            "https://example.com/1/file12.txt",
+            "https://example.com/2/file12.txt",
+            "https://example.com/1/file09.json",
+            "https://example.com/2/file09.json",
+            "https://example.com/1/file10.json",
+            "https://example.com/2/file10.json",
+            "https://example.com/1/file11.json",
+            "https://example.com/2/file11.json",
+            "https://example.com/1/file12.json",
+            "https://example.com/2/file12.json",
+        ]);
+    });
+});

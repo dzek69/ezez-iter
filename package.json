@@ -2,6 +2,8 @@
   "name": "@ezez/iter",
   "version": "1.0.0",
   "author": "Jacek Nowacki",
+  "homepage": "https://github.com/dzek69/ezez-iter",
+  "description": "Generate a list of urls from a given pattern",
   "license": "MIT",
   "scripts": {
     "test": "NODE_ENV=test jest",
